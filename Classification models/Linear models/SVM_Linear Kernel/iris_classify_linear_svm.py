@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Jan 16 15:25:52 2019
+Created on Thu Jan 17 16:29:38 2019
 
 @author: manarayanan
 """
@@ -17,8 +17,8 @@ import pandas as pd
 import warnings
 warnings.filterwarnings("ignore")
 
-#**********Linear classification model - Logistic Regression**********
-from sklearn.linear_model import LogisticRegression
+#**********Linear classification model - SVM Linear **********
+from sklearn.svm import SVC
 print("<<END>> Import the necessary libraries <<END>>")
 
 #**********Import the dataset**********
@@ -61,9 +61,9 @@ print("<<END>> 2)Applying PCA step <<END>>")
 
 print("<<START>> 3)Fitting machine learning model <<START>>")
 #**********Fitting machine learning model to the Training set**********
-model = LogisticRegression(C = 1, solver="sag", multi_class="ovr")
+model = SVC(C = 1.0, kernel="linear", gamma="auto")
  
-print("Fitting the training dataset using '{}' model".format("Logistic Regression"))
+print("Fitting the training dataset using '{}' model".format("Support Vector Machine"))
 classifier = model
 classifier.fit(X_train, y_train)
 print("<<END>> 3)Fitting machine learning model <<END>>")
@@ -75,7 +75,6 @@ y_pred = classifier.predict(X_test)
 #**********Making the Confusion Matrix**********
 from sklearn.metrics import confusion_matrix
 cm = confusion_matrix(y_test, y_pred)
-print("Confusion matrix",cm)
 
 #**********Retrieving classification report**********
 from sklearn.metrics import classification_report
@@ -93,17 +92,17 @@ print("<<END>> 5)Applying k-Fold Cross Validation <<END>>")
 print("<<START>> 6)Applying Grid Search <<START>>")
 #**********Applying Grid Search to find the best model and the best parameters**********
 from sklearn.model_selection import GridSearchCV
-classifier1 = LogisticRegression()
-parameters = [{'C': [0.1, 1, 10, 100, 1000], 'solver': ['newton-cg', 'lbfgs', 'liblinear', 'sag', 'saga']}]
+classifier1 = SVC()
+parameters = [{"C": [0.1, 1, 10, 100, 1000], "kernel": ['linear', 'poly', 'rbf', 'sigmoid']}]
 grid_search = GridSearchCV(estimator = classifier1,
                            param_grid = parameters,
                            scoring = 'accuracy',
                            cv = 10)					   
 grid_search = grid_search.fit(X_train, y_train)
 best_accuracy = grid_search.best_score_
-print("K-Fold cross validation Best accuracy = ", best_accuracy)
+print("K- FOLD Best accuracy = ", best_accuracy)
 best_parameters = grid_search.best_params_
-print("K-Fold cross validation Best parameters = ", best_parameters)
+print("K- FOLD Best parameters = ", best_parameters)
 print("<<END>> 6)Applying Grid Search <<END>>")
 
 
@@ -120,7 +119,7 @@ plt.ylim(X2.min(), X2.max())
 for i, j in enumerate(np.unique(y_set)):
     plt.scatter(X_set[y_set == j, 0], X_set[y_set == j, 1],
                 c = ListedColormap(('red', 'green', 'blue'))(i), label = j)
-plt.title('Iris dataset (Test set)')
+plt.title('Iris dataset (Test set) - SVM - Linear Kernel')
 plt.xlabel('PC1')
 plt.ylabel('PC2')
 plt.legend()
@@ -140,7 +139,7 @@ plt.ylim(X2.min(), X2.max())
 for i, j in enumerate(np.unique(y_set)):
     plt.scatter(X_set[y_set == j, 0], X_set[y_set == j, 1],
                 c = ListedColormap(('red', 'green', 'blue'))(i), label = j)
-plt.title('Iris dataset (Training set)')
+plt.title('Iris dataset (Training set) - SVM - Linear Kernel')
 plt.xlabel('PC1')
 plt.ylabel('PC2')
 plt.legend()
