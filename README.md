@@ -1,5 +1,7 @@
 # Machine-Learning
-All my learnings about machine learning
+Applying all my learnings about machine learning.
+
+In this repository, will build and track applying several machine learning algorithms on various open source datasets using the most popular machine learning tool scikit-learn in Python. 
 
 # Logistic Regression model applied on Iris dataset
 <div align="center">
