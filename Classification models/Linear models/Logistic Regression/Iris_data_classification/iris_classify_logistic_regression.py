@@ -22,22 +22,30 @@ from sklearn.linear_model import LogisticRegression
 print("<<END>> Import the necessary libraries <<END>>")
 
 #**********Import the dataset**********
-from sklearn.datasets import load_iris
 print("<<START>> Import the dataset <<START>> ")
-dataset = load_iris()
+url="https://raw.githubusercontent.com/Manohar11/Machine-Learning/master/Classification%20models/Datasets/iris.data"
+headers = ['sepal_length', 'sepal width', 'petal length','petal width', 'class']
+dataset=pd.read_csv(url, sep= ",", header= None, names = headers, index_col= False)
 
 #**********Matrix of features - Independent variables**********
-X = dataset.data
+X = dataset[['sepal_length', 'sepal width', 'petal length','petal width']]
 
 #**********Dependent variable**********
-y = dataset.target
+y = dataset['class']
 print("<<END>> Import the dataset <<END>> ")
 
 #**********Handling the missing values**********
-#dataset.isnull().any()
+dataset.isnull().any()
 
-#**********Encoding the categorical data**********
-#*** No categorical data
+#**********Handling the categorical data**********
+# No categoricals on Independent Variables
+
+# Exist categorical data on dependent variable
+from sklearn.preprocessing import LabelEncoder
+labelENC_y = LabelEncoder()
+y[:] = labelENC_y.fit_transform(y[:])
+
+
 
 #**********Splitting the dataset into the Training set and Test set**********
 from sklearn.model_selection import train_test_split
@@ -79,7 +87,7 @@ print("Confusion matrix",cm)
 
 #**********Retrieving classification report**********
 from sklearn.metrics import classification_report
-print(classification_report(y_test, y_pred,target_names=dataset.target_names))
+print(classification_report(y_test, y_pred,target_names=['setosa', 'versicolor', 'virginica']))
 print("<<END>> 4)Evaluating model performance <<END>>")
 
 print("<<START>> 5)Applying k-Fold Cross Validation <<START>>")
