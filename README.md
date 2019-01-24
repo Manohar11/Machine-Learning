@@ -5,7 +5,7 @@ In this repository, will build and track applying several machine learning algor
 
 <h2> Dataset: Iris dataset </h2>
 <h2> Model  : Logistic Regression </h2>
-<h2> Goal   : Predict the tyhpe of iris plant </h2>
+<h2> Goal   : Predict the type of iris plant </h2>
 
 <h2> Description: </h2>
 
